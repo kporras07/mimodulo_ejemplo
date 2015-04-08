@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * Tests functionality of mimodulo_ejemplo.
+ */
+
+ class MimoduloEjemploTestCase extends DrupalWebTestCase {
+   protected $privileged_user;
+
+   public static function getInfo() {
+     // Note: getInfo strings are not translated with t.
+     return array(
+       'name' => 'Mimodulo Ejemplo Test Example',
+       'description' => 'Énsure that provided block functions properly.',
+       'group' => 'Mimodulo Ejemplo',
+     );
+   }
+
+   public function setUp() {
+     // Enable any required module.
+     parent::setUp(array('mimodulo_ejemplo'));
+     // Create and log in our privileged user.
+     $this->privileged_user = $this->drupalCreateUser(array(
+       'administer blocks',
+     ));
+     $this->drupalLogin($this->privileged_user);
+   }
+
+   public function testMimoduloEjemploHelloWorldBlockExists() {
+     $this->drupalGet('admin/structure/block/manage/mimodulo_ejemplo/hello_world/configure');
+     $this->assertText('Hello World Demo Block');
+   }
+ }

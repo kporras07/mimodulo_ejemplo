@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * @file
+ * Main file for example module.
+ */
+
+ /**
+ * Implements hook_permission().
+ */
+ function mimodulo_ejemplo_permission() {
+  $permissions = array();
+  $permissions['view hello world block'] = array(
+    'title' => t('View Hello World Block'),
+    'description' => t('Allows user to view Hello World Block.'),
+  );
+  return $permissions;
+ }
+
+ /**
+ * Implements hook_help().
+ */
+ function mimodulo_ejemplo_help($path, $arg) {
+   if ($path == 'admin/help#mimodulo_ejemplo') {
+     return t('This is the help for mimodulo_ejemplo module.');
+   }
+ }
+
+ /**
+  * Implements hook_block_info().
+  */
+ function mimodulo_ejemplo_block_info() {
+   return array(
+     'hello_world' => array(
+       'info' => 'Hello World Demo Block',
+       'cache' => DRUPAL_CACHE_GLOBAL,
+     ),
+   );
+ }
+
+ /**
+ * Implements hook_block_view().
+ */
+ function mimodulo_ejemplo_block_view($delta = '') {
+   $block = array();
+   switch ($delta) {
+     case 'hello_world':
+      $block = mimodulo_ejemplo_hello_world_block();
+      break;
+   }
+   return $block;
+ }
+
+ /**
+  * Returns hello_world block.
+  */
+  function mimodulo_ejemplo_hello_world_block() {
+    $block = array();
+    if (user_access('view hello world block')) {
+      $block['subject'] = t('Hello World');
+      $block['content'] = '<span>' . t('Hi there!') . '</span>';
+    }
+    return $block;
+  }

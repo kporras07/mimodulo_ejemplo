@@ -1,0 +1,5 @@
+name = Mi módulo de ejemplo
+description = Contiene un ejemplo básico para mi primer módulo
+package = Drupal Intermedio
+core = 7.x
+files[] = mimodulo_ejemplo.test
